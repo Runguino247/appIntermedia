@@ -76,4 +76,16 @@ class DatabaseHelper {
       whereArgs: [id],
     );
   }
+  // 4. ACTUALIZAR (Update)
+  Future<int> update(Comida meal) async {
+    final db = await instance.database;
+
+    return await db.update(
+      'meals',
+      meal.toMap(),
+      where: 'id = ?',
+      whereArgs: [meal.id],
+    );
+  }
+
 }

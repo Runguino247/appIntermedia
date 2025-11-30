@@ -1,4 +1,3 @@
-import 'package:appintyermedia/ventanas/Dia.dart';
 import 'package:appintyermedia/ventanas/semana.dart';
 import 'package:flutter/material.dart';
 
