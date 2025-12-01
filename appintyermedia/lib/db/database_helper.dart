@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart'; // El motor
-import 'package:path/path.dart';       // Utilidad de rutas
-import '../models/comida.dart';          // Importamos tu modelo
+import 'package:path/path.dart'; // Utilidad de rutas
+import '../models/comida.dart'; // Importamos tu modelo
 
 class DatabaseHelper {
   // Patrón Singleton: Para usar siempre la misma instancia de la BD
@@ -59,8 +59,8 @@ class DatabaseHelper {
     final result = await db.query(
       'meals',
       where: 'dayOfWeek = ?', // El ? evita inyección SQL
-      whereArgs: [day],       // Aquí va "Lunes", "Martes", etc.
-      orderBy: 'time ASC',    // Ordenar por hora (ej. desayuno antes que cena)
+      whereArgs: [day], // Aquí va "Lunes", "Martes", etc.
+      orderBy: 'time ASC', // Ordenar por hora (ej. desayuno antes que cena)
     );
 
     // Convertimos la lista de mapas (JSON) a lista de objetos Meal
@@ -70,10 +70,26 @@ class DatabaseHelper {
   // 3. BORRAR
   Future<int> delete(int id) async {
     final db = await instance.database;
-    return await db.delete(
+    return await db.delete('meals', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // 4. ACTUALIZAR (Update)
+  Future<int> update(Comida meal) async {
+    final db = await instance.database;
+
+    return await db.update(
       'meals',
+      meal.toMap(),
       where: 'id = ?',
-      whereArgs: [id],
+      whereArgs: [meal.id],
     );
+  }
+
+  Future<List<Comida>> readAllMeals() async {
+    final db = await instance.database;
+
+    final result = await db.query('meals', orderBy: 'title ASC');
+
+    return result.map((json) => Comida.fromMap(json)).toList();
   }
 }

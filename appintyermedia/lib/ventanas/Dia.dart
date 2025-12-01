@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../db/database_helper.dart';
 import '../models/comida.dart';
 import 'pantalla_agregar_comida.dart'; // Tu formulario
-// import 'pantalla_info_comida.dart'; // (Opcional) La pantalla de ver detalle/borrar
+import 'pantalla_info_comida.dart'; // (Opcional) La pantalla de ver detalle/borrar
 
 class PantallaDetalleDia extends StatefulWidget {
   final String nombreDia; // "Lunes", "Martes"...
@@ -94,11 +94,16 @@ class _PantallaDetalleDiaState extends State<PantallaDetalleDia> {
       margin: EdgeInsets.only(bottom: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
-        onTap: () {
-          // AQUÍ NAVEGARÍAS A "VER DETALLE / BORRAR"
-          // Navigator.push(...).then((_) => _recargarLista());
-          print("Tocaste ${comida.title}");
+        onTap: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PantallaInfoComida(comida: comida),
+            ),
+          );
+          _recargarLista(); // Refresca si editaron o eliminaron
         },
+
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Row(
