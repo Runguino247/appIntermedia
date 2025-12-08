@@ -2,7 +2,7 @@ import 'dart:io'; // IMPORTANTE: Para poder mostrar la imagen del archivo
 import 'package:flutter/material.dart';
 import '../db/database_helper.dart'; // Tu base de datos
 import '../models/comida.dart'; // Tu modelo (Asegúrate de que la clase Meal ahora se llame Comida)
-import 'dia.dart' hide Comida; // Importamos el archivo dia.dart
+import 'dia.dart'; // Importamos el archivo dia.dart
 import 'pantalla_recetario.dart'; // Importamos la pantalla del recetario
 
 class PantallaPrincipal extends StatefulWidget {
